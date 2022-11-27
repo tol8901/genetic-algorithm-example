@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="./script.js"></script>
+</head>
+<body onload="getOne()">
+    <div class="container">
+      <div class="p-4 shadow-4 rounded-3" style="background-color: hsl(0, 0%, 94%);">
+        <h1 class="text-center">Лабораторна робота № 2</h1>
+        <h2 class="text-center">Дисципліна: «Методи штучного інтелекту»</h2>
+        <h2 class="text-end">Тема: Генетичні алгоритми</h2>
+        <p class="text-end">
+            Виконав:
+            <br>
+            студент групи IK-9-22-M1IПЗ(1.6д)
+            <br>
+            Кравченко A. Ю. 
+        </p>
+        <hr class="my-4" />
+  
+        <form id="form">
+            <div class="mb-3">
+                Задача: <br>
+                𝑓(𝑥, 𝑦, 𝑧) → 𝑚𝑎𝑥 <br />
+                (𝑥, 𝑦, 𝑧) ∈ 𝐷 = {(𝑥, 𝑦, 𝑧): 0 ≤ 𝑥 ≤ 63, 0 ≤ 𝑦 ≤ 63, 0 ≤ 𝑧 ≤ 63},
+            </div>
+            <div class="mb-3">
+
+                <div class="form-check">
+                  <label for="flexRadioDefaultSize">Розмір популяції:</label>
+                  <select id="populationSize" name="defaultSize"> 
+                    <option selected> 
+                      6 
+                    </option> 
+                    <option> 
+                      7 
+                    </option> 
+                    <option> 
+                      8 
+                    </option> 
+                    <option> 
+                      9 
+                    </option> 
+                    <option> 
+                      10 
+                    </option> 
+                  </select> 
+
+                  <label for="defaultGenerations">Кількість поколінь:</label>
+                  <select id="defaultGenerations" name="defaultGenerations"> 
+                    <option> 
+                      6 
+                    </option> 
+                    <option> 
+                      7 
+                    </option> 
+                    <option> 
+                      8 
+                    </option> 
+                    <option> 
+                      9 
+                    </option> 
+                    <option selected> 
+                      10 
+                    </option> 
+                  </select> 
+                </div>
+            </div>
+            <div class="mb-3">
+              <p>Оператори схрещування:</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefaultCrossing" id="flexRadioDefault3">
+                <label class="form-check-label" for="flexRadioDefault3">
+                  2-точкове
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefaultCrossing" id="flexRadioDefault4" checked>
+                <label class="form-check-label" for="flexRadioDefault4">
+                  3-точкове
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn">Обчислити</button>
+            <button type="button" class="btn btn-secondary" id="btn_clean">Очистити вікно виводу</button>
+        </form>
+        <div class="form-outline">
+          <label class="form-label" for="textAreaExample">Друк виводу програми</label>
+          <textarea class="form-control" id="textAreaExample1" rows="40"></textarea>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
