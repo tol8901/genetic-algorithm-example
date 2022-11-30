@@ -1,4 +1,13 @@
 'use strict';
+const minX = 0;
+const minY = 0;
+const minZ = 0;
+const maxX = 63;
+const maxY = 63;
+const maxZ = 63;
+
+
+
 function getOne()
             {
                 const outputWindow = document.getElementById("textAreaExample1");
@@ -13,7 +22,6 @@ function getOne()
                 btnClean.addEventListener('click', formClean);
                 // Events description
                 function formSubmit(event) {
-                    // line below - placeholder
                     outputWindow.textContent += `--- Початок виконання алгоритму! --- \n`;
                     outputWindow.textContent += "Почтакові дані для розрахунку:\n";
                     outputWindow.textContent += `Розмір популяції: ${defaultSize.value};\n`
@@ -36,102 +44,108 @@ function getOne()
                     
                     class Member {
                         constructor(target) {
-                        this.target = target;
-                        this.keys = [];
-                    
-                        for (let i = 0; i < target.length; i += 1) {
-                            this.keys[i] = generateLetter();
-                        }
+                            this.target = target;
+                            this.keys = [];
+                        
+                            for (let i = 0; i < target.length; i += 1) {
+                                this.keys[i] = generateLetter();
+                            }
                         }
                     
                         fitness() {
-                        let matches = 0;
-                    
-                        for (let i = 0; i < this.keys.length; i += 1) {
-                            if (this.keys[i] === this.target[i]) {
-                            matches += 1;
+                            let matches = 0;
+                        
+                            for (let i = 0; i < this.keys.length; i += 1) {
+                                if (this.keys[i] === this.target[i]) {
+                                    matches += 1;
+                                }
                             }
-                        }
                     
-                        return matches / this.target.length;
+                            return matches / this.target.length;
                         }
                     
                         crossover(partner) {
-                        const { length } = this.target;
-                        const child = new Member(this.target);
-                        const midpoint = random(0, length);
-                    
-                        for (let i = 0; i < length; i += 1) {
-                            if (i > midpoint) {
-                            child.keys[i] = this.keys[i];
-                            } else {
-                            child.keys[i] = partner.keys[i];
+                            const { length } = this.target;
+                            const child = new Member(this.target);
+                            const midpoint = random(0, length);
+                        
+                            for (let i = 0; i < length; i += 1) {
+                                if (i > midpoint) {
+                                    child.keys[i] = this.keys[i];
+                                } else {
+                                    child.keys[i] = partner.keys[i];
+                                }
                             }
-                        }
-                    
-                        return child;
+                        
+                            return child;
                         }
                     
                         mutate(mutationRate) {
-                        for (let i = 0; i < this.keys.length; i += 1) {
-                            // If below predefined mutation rate,
-                            // generate a new random letter on this position.
-                            if (Math.random() < mutationRate) {
-                            this.keys[i] = generateLetter();
+                            for (let i = 0; i < this.keys.length; i += 1) {
+                                // If below predefined mutation rate,
+                                // generate a new random letter on this position.
+                                if (Math.random() < mutationRate) {
+                                    this.keys[i] = generateLetter();
+                                }
                             }
-                        }
                         }
                     }
                     
                     class Population {
                         constructor(size, target, mutationRate) {
-                        size = size || 1;
-                        this.members = [];
-                        this.mutationRate = mutationRate;
-                    
-                        for (let i = 0; i < size; i += 1) {
-                            this.members.push(new Member(target));
-                        }
+                            size = size || 1;
+                            this.members = [];
+                            this.mutationRate = mutationRate;
+                        
+                            for (let i = 0; i < size; i += 1) {
+                                this.members.push(new Member(target));
+                            }
+                            // Print population
+                            outputWindow.textContent += "Популяція: \n";
+                            outputWindow.textContent += "X, Y, Z, F\n";
+                            for (let i of this.members) {
+                                outputWindow.textContent += `${i.keys} \n`;
+                            }
                         }
                     
                         evolve(generations) {
-                        for (let i = 0; i < generations; i += 1) {
-                            const pool = this._selectMembersForMating();
-                            this._reproduce(pool);
-                        }
+                            for (let i = 0; i < generations; i += 1) {
+                                const pool = this._selectMembersForMating();
+                                this._reproduce(pool);
+                            }
                         }
                     
                         _selectMembersForMating() {
-                        const matingPool = [];
-                    
-                        this.members.forEach((m) => {
-                            // The fitter he/she is, the more often will be present in the mating pool
-                            // i.e. increasing the chances of selection
-                            // If fitness == 0, add just one member
-                            const f = Math.floor(m.fitness() * 100) || 1;
-                    
-                            for (let i = 0; i < f; i += 1) {
-                            matingPool.push(m);
-                            }
-                        });
-                    
-                        return matingPool;
+                            const matingPool = [];
+                        
+                            this.members.forEach((m) => {
+                                // The fitter he/she is, the more often will be present in the mating pool
+                                // i.e. increasing the chances of selection
+                                // If fitness == 0, add just one member
+                                const f = Math.floor(m.fitness() * 100) || 1;
+                        
+                                for (let i = 0; i < f; i += 1) {
+                                    matingPool.push(m);
+                                }
+                            });
+                        
+                            return matingPool;
                         }
                     
                         _reproduce(matingPool) {
-                        for (let i = 0; i < this.members.length; i += 1) {
-                            // Pick 2 random members/parent from the mating pool
-                            const parentA = matingPool[random(0, matingPool.length)];
-                            const parentB = matingPool[random(0, matingPool.length)];
-                    
-                            // Perform crossover
-                            const child = parentA.crossover(parentB);
-                    
-                            // Perform mutation
-                            child.mutate(this.mutationRate);
-                    
-                            this.members[i] = child;
-                        }
+                            for (let i = 0; i < this.members.length; i += 1) {
+                                // Pick 2 random members/parent from the mating pool
+                                const parentA = matingPool[random(0, matingPool.length)];
+                                const parentB = matingPool[random(0, matingPool.length)];
+                        
+                                // Perform crossover
+                                const child = parentA.crossover(parentB);
+                        
+                                // Perform mutation
+                                child.mutate(this.mutationRate);
+                        
+                                this.members[i] = child;
+                            }
                         }
                     }
                     
