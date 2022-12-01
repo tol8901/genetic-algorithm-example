@@ -173,11 +173,9 @@ function getOne()
                     outputWindow.textContent += "--- Кінець виконання алгоритму ---\n"
                     outputWindow.textContent += "***************************************\n"
 
-
                     event.preventDefault();
                   }
                 
-
                 function formClean(event) {
                     outputWindow.textContent = "";
                 }
